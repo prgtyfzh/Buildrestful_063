@@ -44,16 +44,20 @@ public class ProductServiceController {
     
     @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Product product) {
+        if(!productRepo.containsKey(id)){
+        return new ResponseEntity<>("ID NOT FOUND", HttpStatus.NOT_FOUND);
+        } else {
         productRepo.remove(id);
         product.setId(id);
         productRepo.put(id, product);
         return new ResponseEntity<>("Product is updated successfully", HttpStatus.OK);
+        }
     }
     
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<Object> createProduct(@RequestBody Product product) {
         if(productRepo.containsKey(product.getId())) {
-        return new ResponseEntity<>("Sorry, ID HAS BEEN USED", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("SORRY, ID HAS BEEN USED", HttpStatus.NOT_FOUND);
         }else{
         productRepo.put(product.getId(), product);
         return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
