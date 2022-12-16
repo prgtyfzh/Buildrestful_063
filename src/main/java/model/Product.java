@@ -54,8 +54,11 @@ public class Product {
     }
 
     public int getTotal() {
-        total = price - (price * disc / 100);
         return total;
     }
-    
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
 }

@@ -32,6 +32,7 @@ public class ProductServiceController {
         honey.setName("Honey");
         honey.setDisc(10);
         honey.setPrice(65000);
+        honey.setTotal(honey.getPrice() - (honey.getPrice() * honey.getDisc() / 100));
         productRepo.put(honey.getId(), honey);
         
         Product almond = new Product();
@@ -39,6 +40,7 @@ public class ProductServiceController {
         almond.setName("Almond");
         almond.setDisc(10);
         almond.setPrice(65000);
+        almond.setTotal(almond.getPrice() - (almond.getPrice() * almond.getDisc() / 100));
         productRepo.put(almond.getId(), almond);
     }
     
@@ -56,6 +58,7 @@ public class ProductServiceController {
         if(!productRepo.containsKey(id)){
         return new ResponseEntity<>("ID NOT FOUND", HttpStatus.NOT_FOUND);
         } else {
+        product.setTotal(product.getPrice() - (product.getPrice() * product.getDisc() / 100));
         productRepo.remove(id);
         product.setId(id);
         productRepo.put(id, product);
@@ -70,6 +73,7 @@ public class ProductServiceController {
         if(productRepo.containsKey(product.getId())) {
         return new ResponseEntity<>("SORRY, ID HAS BEEN USED", HttpStatus.NOT_FOUND);
         }else{
+        product.setTotal(product.getPrice() - (product.getPrice() * product.getDisc() / 100));
         productRepo.put(product.getId(), product);
         return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
         }
